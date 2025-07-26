@@ -6,6 +6,8 @@
      $ git init
 [05] Step> Copy your Repo link something like:
      $ git remote add origin https://github.com/your-username/project.git
+     (If you find origin already exist run $ git remote remove origin)
+     (If you run the wrong remote ---/your-username/wrong.git stil you can remove it with the remove command and move with normal to continue)
      [NOTE] Verify Remote connection with command:
      $ git remote -v
      [It_should_output:]
@@ -17,6 +19,10 @@
      git commit -m "Initial commit"
      git branch -M main
      git push -u origin main
+
+     NOTE
+     $ git reset (It will undo $ git add .)
+     
 [07] Verify on GitHub
      Go to GitHub → Your Repo (my-laravel-project).
 
