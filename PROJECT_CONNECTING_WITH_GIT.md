@@ -19,3 +19,44 @@
      git push -u origin main
 [07] Verify on GitHub
      Go to GitHub → Your Repo (my-laravel-project).
+
+<!-- WORKING WITH BRANCHING WITH REMOTE GIT -->
+As you already in main branch. If you want to check run this command
+     $ git branch
+
+     This will show as:
+     * main [Star shows you are in this branch, means * indicating current branch]
+     development
+
+     If you are not in main
+     $ git checkout main
+
+     Then pull the latest changes (just in case):
+     $ git reset --hard origin/main
+     $ git pull origin main
+     
+Create a New Branch Called development
+     $ git checkout -b development
+
+     This:
+          - Creates a new branch named development
+          - Automatically switches you to that branch
+     
+Push development Branch to GitHub
+     $ git push -u origin development
+
+     Now GitHub also has your development branch.
+
+Pull Code from main to development
+     Once you're in development branch and want to pull new updates from main, do this:
+     $ git checkout development
+     $ git reset --hard origin development
+     $ git pull origin main
+
+If you want to mearge from all branch follow:
+     $ git checkout [BRANCH NAME]
+     $ git reset --hard origin/[SAME BRANCH NAME IN WHICH YOU ARE]
+     $ git pull origin [SAME BRANCH NAME IN WHICH YOU ARE]
+     $ git pull origin [OTHER BRANCH]
+
+     Here you have successfully merged the two branches code.
