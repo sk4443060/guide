@@ -1,0 +1,48 @@
+# Aapki site React JS only frontend hai (i.e., client-side app without Node server), to sabse suitable option hai:
+
+# Step-by-Step Guide to Host React Site on CloudPanel (HTML Site Option):
+  🔧 1. Locally Build Your React App
+  $ npm run build
+  (Ye command aapke project ke root folder me ek build/ folder banayegi, jisme optimized HTML, JS, CSS files hongi.)
+
+ 🌐 2. Login to CloudPanel & Create HTML Site
+        1. CloudPanel dashboard me jayein → Add Site pe click karein
+        2. Choose: ✅ Create an HTML Site
+        3. Fill these fields:
+           - Domain: e.g. yourclientdomain.com
+           - System User: (auto-generated ya khud bana lein)
+           - PHP Version: Doesn’t matter for HTML, so leave as default
+        4. Click Create Site
+
+        Ab aapka HTML Site ban chuka hai, aur CloudPanel ne iske liye ek directory create kar di hai, jo by default kuch is path par hoti hai:
+        /home/cloudpanel/htdocs/yourdomain.com/
+
+🔐 3 Safe Options for Cloning Private GitHub Repo:
+     HTTPS with Personal Access Token (Recommended for Simplicity)
+     $ git clone https://<your-github-username>:<your-personal-access-token>@github.com/<your-github-username>/<your-private-repo>.git
+
+     1. Create Personal Access Token (PAT) at your github account:
+        A. Go to GitHub → Click your profile → Settings
+        B. Left menu: Developer settings → Personal access tokens → Tokens (classic)
+        C. Click: Generate new token
+            - Select scopes: ✅ repo and read:packages
+            - Expiry: 30 days or custom
+        D. Copy token (it will be shown only once)
+# Login to VPS via SSH
+  $ ssh root@<your-vps-ip>
+
+# Navigate to your HTML site directory
+  cd /home/cloudpanel/htdocs/yourdomain.com/
+
+# Clone your repo
+  $ git clone https://<username>:<token>@github.com/<username>/<repo>.git temp
+
+# Move build files (Now build the app (inside temp/) and move build/ folder content to parent HTML site directory.)
+  $ cd temp
+  $ npm install
+  $ npm run build
+  $ cp -r build/* ../
+
+  Then clean up: (Optional)
+  $ cd ..
+  $ rm -rf temp
