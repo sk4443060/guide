@@ -130,6 +130,9 @@ WEBSITE
     
     export default router
 
+    NOTE: You need to install the router in your project, run the following command
+          @ npm install vue-router@4
+
 [07] SETUP VIEWS FILE (views > Home.vue)
 
     <template>
@@ -144,3 +147,61 @@ WEBSITE
         name: 'Home',
       }
     </script>
+
+[08] MODIFY YOUR App.vue FILE AS:
+
+     <template>
+       <DefaultLayout>
+         <router-view />
+       </DefaultLayout>
+     </template>
+          
+     <script>
+     import DefaultLayout from './layouts/DefaultLayout.vue'
+     
+     export default {
+       components: {
+         DefaultLayout
+       }
+     }
+     </script>
+
+[09] UPATE YOUR main.js FILE AS:
+
+     // main.js
+     import { createApp } from 'vue'
+     import App from './App.vue'
+     import router from './router'
+     
+     const app = createApp(App)
+     app.use(router)
+     app.mount('#app')
+
+QUICK REVISION
+[STEP01] 📁 Go to: src/components/           (Create Navbar.vue and Footer.vue Components)
+[STEP02] 📁 src/layouts/DefaultLayout.vue    (Yeh layout har page (like Home, About, etc.) ke around Navbar aur Footer ko wrap karega.)
+[STEP03] 📁 src/views/Home.vue               (Home.vue file Vue.js app ka Home Page component hota hai — 
+                                              yaani jab user website ke / (root URL) par aata hai, toh yahi component screen par dikhta hai)
+[STEP04] 📁 src/router/index.js              (Setup Routing in src/router/index.js ✅ Then add router to your main app in main.js:)
+[STEP05] 📁 src/App.js                       (Use Layout in App.vue)
+
+SOME EXTRA SETUP
+✅ Step-by-Step: Add Global Reset / Base CSS
+Step 1: Go to: src/assets/base.css           (Create a global CSS file)
+Step 2: Add your reset CSS inside base.css   (Write your reset css/global css in this file)
+Step 3: Import the CSS in main.js            (Open: src/main.js And Add this line at the top import './assets/base.css')
+
+                                             Final main.js might look like:
+                                             -----------------------------------
+                                             import { createApp } from 'vue'
+                                             import App from './App.vue'
+                                             import router from './router'
+                                             
+                                             // 👇 Add this
+                                             import './assets/base.css'
+                                             
+                                             const app = createApp(App)
+                                             app.use(router)
+                                             app.mount('#app')
+
+     
