@@ -109,6 +109,26 @@ WEBSITE
       }
     </script>
 
+     Iska matlab hai:
+     🔧 "Jo bhi content (page) is layout ke andar use kiya jaayega, wo <slot /> ke jagah inject hoga."
+     
+          💡 Aasaan Bhasha Mein Flow:
+          📦 DefaultLayout.vue ek container hai
+          Upar Navbar
+     
+          Beech me main tag jisme <slot /> hai
+     
+          Neeche Footer
+     
+          🧩 <slot /> kya hai?
+          <slot /> ek placeholder hai jahan doosre component ka content "chipak" jaata hai.
+
+          Notice the template block at step 08
+               Aap bol rahe ho: "Mujhe har page ke around Navbar + Footer chahiye."
+               Aur beech me router-view (jaise ki Home.vue ka content) inject ho.               
+               2️⃣ To DefaultLayout.vue ka <slot /> kya karega?
+               Wo router-view (yaani Home.vue) ka content ko inject karega us jagah pe jahan <slot /> likha gaya hai.
+
 [06] SETUP ROUTER FOLLOW AS: (router > index.js)
 
     // src/router/index.js
@@ -204,4 +224,153 @@ Step 3: Import the CSS in main.js            (Open: src/main.js And Add this lin
                                              app.use(router)
                                              app.mount('#app')
 
+JUST FOR YOUR NOTE
+Renders your index.html
+You will find "<script type="module" src="/src/main.js"></script>" inside index.html
+
+     <!DOCTYPE html>
+     <html lang="">
+       <head>
+         <meta charset="UTF-8">
+         <link rel="icon" href="/favicon.ico">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <title>Vite App</title>
+       </head>
+       <body>
+         <div id="app"></div>
+         <script type="module" src="/src/main.js"></script>
+       </body>
+     </html>
+
+Notice your main.js file (Here Route Hits)
+
+     // main.js
+     import { createApp } from 'vue'
+     import App from './App.vue'
+     import router from './router'
      
+     // custom and global styles
+     import './assets/reset.css'
+     
+     const app = createApp(App)
+     app.use(router)
+     app.mount('#app')
+
+Now navigate into your router/index.js (It brings Home.vue component from src/views/Home.vue)
+
+     // src/router/index.js
+     import { createRouter, createWebHistory } from 'vue-router'
+     import Home from '../views/Home.vue'
+     
+     const routes = [
+       {
+         path: '/',
+         name: 'Home',
+         component: Home,
+       },
+     ]
+     
+     const router = createRouter({
+       history: createWebHistory(),
+       routes,
+     })
+     
+     export default router
+     
+Now notice you Home.vue
+
+     <template>
+       <div class="home-page">
+         <h1>Welcome to MySite!</h1>
+         <p>This is the home page.</p>
+       </div>
+     </template>
+     
+     <script>
+     export default {
+       name: 'Home',
+     }
+     </script>
+
+Home.vue bind with Navbar.vue and Footer.vue using (src/layouts/DefaultLayout.vue)
+
+     <template>
+       <div>
+         <Navbar />
+         <main>
+           <slot />  [All the pages or components stick here]
+         </main>
+         <Footer />
+       </div>
+     </template>
+     
+     <script>
+          import Navbar from '../components/Navbar.vue'
+          import Footer from '../components/Footer.vue'
+          
+          export default {
+            name: 'DefaultLayout',
+            components: {
+              Navbar,
+              Footer
+            }
+          }
+     </script>
+
+Create your Navbar.vue and Footer.vue components insite (src/compoents/Hearder.vue)
+
+     <template>
+       <nav class="navbar">
+         <div class="logo">MySite</div>
+         <ul class="nav-links">
+           <li><router-link to="/">Home</router-link></li>
+           <li><router-link to="/about">About</router-link></li>
+           <li><router-link to="/contact">Contact</router-link></li>
+         </ul>
+       </nav>
+     </template>
+     
+     <script>
+     export default {
+       name: 'Navbar',
+     }
+     </script>
+     
+     <style scoped>
+     .navbar {
+       display: flex;
+       justify-content: space-between;
+       padding: 1rem 2rem;
+       background-color: #222;
+       color: white;
+     }
+     .nav-links {
+       list-style: none;
+       display: flex;
+       gap: 1rem;
+     }
+     a {
+       color: white;
+       text-decoration: none;
+     }
+     </style>
+
+Don't forgot to register the layout insite src/App.vue
+
+     <template>
+       <DefaultLayout>
+         <router-view />
+       </DefaultLayout>
+     </template>
+     
+     <script>
+     import DefaultLayout from './layouts/DefaultLayout.vue'
+     
+     export default {
+       components: {
+         DefaultLayout
+       }
+     }
+     </script>
+
+Here you have don the basic set up
