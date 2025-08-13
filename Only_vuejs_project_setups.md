@@ -373,4 +373,34 @@ Don't forgot to register the layout insite src/App.vue
      }
      </script>
 
-Here you have don the basic set up
+Here you have done the basic set up
+===================================
+PROPS IN VUE JS PROJECT
+===================================
+AboutUs.vue (Parent)
+
+     <InternalPageHeader title="About Us" breadcrumb="About Us" />
+     Here title and breadcrumb are properties
+     NOTE:
+     01. To use this element you need to import inside script tag
+          import InternalPageHeader from "@/components/minor-components/InternalPageHeader.vue";
+     02. Go to inside export default block
+          components: { InternalPageHeader }
+
+Go to the child component (EG. InternalPageHeader.vue) Inside export default block
+
+       props: {
+         title: {
+           type: String,
+           required: true
+         },
+         breadcrumb: {
+           type: String,
+           required: true
+         }
+       }
+
+       NOTE: USE THE KEY INSIDE TEMPLATE BLOCK AS:
+       <h1>{{ title }}</h1>
+       <span class="last-node">{{ breadcrumb }}</span>
+       
