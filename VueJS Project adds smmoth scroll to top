@@ -1,0 +1,121 @@
+On navigate the link in VueJS Project adds smmoth scroll to top
+===============================================================
+Go to: route/index.js
+
+// ✅ Smooth scroll helper
+function smoothScrollToTop(duration = 600) {
+  const start = window.scrollY || window.pageYOffset
+  const startTime = performance.now()
+
+  function easeInOutQuad(t) {
+    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
+  }
+
+  function scrollStep(currentTime) {
+    const elapsed = currentTime - startTime
+    const progress = Math.min(elapsed / duration, 1)
+    const ease = easeInOutQuad(progress)
+
+    window.scrollTo(0, start * (1 - ease))
+
+    if (elapsed < duration) {
+      requestAnimationFrame(scrollStep)
+    }
+  }
+
+  requestAnimationFrame(scrollStep)
+}
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+  // scrollBehavior(to, from, savedPosition) {
+  //   // Agar user back/forward kare to purani position restore ho
+  //   if (savedPosition) {
+  //     return savedPosition
+  //   } else {
+  //     // warna hamesha top pe scroll kare
+  //     return { top: 0 }
+  //   }
+  // },
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      // instead of direct { top: 0 }, trigger smooth scroll
+      setTimeout(() => {
+        smoothScrollToTop(800) // 👈 800ms duration
+      }, 50)
+      return false // Vue ko bolo ki default jump na kare
+    }
+  },
+})
+
+==============================================================
+FOR EXAMPLE
+==============================================================
+
+// src/router/index.js
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../views/Home.vue'
+
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home,
+  },
+]
+
+// ✅ Smooth scroll helper
+function smoothScrollToTop(duration = 600) {
+  const start = window.scrollY || window.pageYOffset
+  const startTime = performance.now()
+
+  function easeInOutQuad(t) {
+    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
+  }
+
+  function scrollStep(currentTime) {
+    const elapsed = currentTime - startTime
+    const progress = Math.min(elapsed / duration, 1)
+    const ease = easeInOutQuad(progress)
+
+    window.scrollTo(0, start * (1 - ease))
+
+    if (elapsed < duration) {
+      requestAnimationFrame(scrollStep)
+    }
+  }
+
+  requestAnimationFrame(scrollStep)
+}
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+
+  // ADD SCROLL BEHAVIOUR HERE
+  // scrollBehavior(to, from, savedPosition) {
+  //   // Agar user back/forward kare to purani position restore ho
+  //   if (savedPosition) {
+  //     return savedPosition
+  //   } else {
+  //     // warna hamesha top pe scroll kare
+  //     return { top: 0 }
+  //   }
+  // },
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      // instead of direct { top: 0 }, trigger smooth scroll
+      setTimeout(() => {
+        smoothScrollToTop(800) // 👈 800ms duration
+      }, 50)
+      return false // Vue ko bolo ki default jump na kare
+    }
+  },
+})
+
+export default router
