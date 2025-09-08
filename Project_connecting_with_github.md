@@ -40,6 +40,8 @@ As you already in main branch. If you want to check run this command
      Then pull the latest changes (just in case):
      $ git reset --hard origin/main
      $ git pull origin main
+     Or
+     $ git clone https://<username>:<token>@github.com/<username>/<repo>.git temp
      
 Create a New Branch Called development
      $ git checkout -b development
