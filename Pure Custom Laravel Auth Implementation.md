@@ -32,5 +32,6 @@ Pure Custom Laravel Auth Implementation
 
   ✅ Database ready.
 
-
+Implement the other part:
+https://github.com/sk4443060/guide/blob/main/Create%20Auth%20Controllers%20Pure%20Custom%20Laravel%20Auth%20Implementation.md
     
